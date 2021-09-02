@@ -18,6 +18,29 @@ module.exports = {
         // less-loader将less转换为css
         use: ["style-loader", "css-loader", "less-loader"],
       },
+      {
+        test: /\.(jpe?g|png|git)$/,
+        loader: "url-loader",
+        options: {
+          // 图片小于10kb，就会被base64处理
+          // 优点：减少请求数量 减轻服务器压力
+          // 缺点：图片体积会更大 请求速度更慢
+          limit: 10 * 1024,
+          // url-loader默认使用es6模块解析，而html-loader是commonjs 所以关闭url-loader的模块化
+          esModule: false,
+          // 给图片进行重命名 [hash:10]取图片的hash的前10位 [ext]取文件原来扩展名
+          name: "[hash:10].[ext]",
+        },
+      },
+      {
+        test: /\.html$/,
+        // 处理html文件的img 从而能被url-loader处理
+        loader: "html-loader",
+        options: {
+          // url-loader默认使用es6模块解析，而html-loader是commonjs 所以关闭url-loader的模块化
+          esModule: false,
+        },
+      },
     ],
   },
   plugins: [
