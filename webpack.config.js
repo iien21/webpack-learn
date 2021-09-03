@@ -29,8 +29,10 @@ module.exports = {
           // url-loader默认使用es6模块解析，而html-loader是commonjs 所以关闭url-loader的模块化
           esModule: false,
           // 给图片进行重命名 [hash:10]取图片的hash的前10位 [ext]取文件原来扩展名
-          name: "[hash:10].[ext]",
+          name: "[name][hash:8].[ext]",
         },
+        // 设置防止通过webpack内置的类型导入
+        type: "javascript/auto",
       },
       {
         test: /\.html$/,
